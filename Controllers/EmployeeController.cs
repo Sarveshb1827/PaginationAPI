@@ -9,6 +9,7 @@ namespace PaginationApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        string a = "";
         private readonly IEmployeeService _employeeService;
         //private readonly RequestParams _requestParams;
 
