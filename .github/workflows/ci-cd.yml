@@ -1,0 +1,26 @@
+name: CI-CD IIS Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build Project
+      run: |
+        "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe" PaginationApi.sln /p:Configuration=Release
+
+    - name: Stop IIS
+      run: iisreset /stop
+
+    - name: Deploy Files
+      run: xcopy /E /Y .\PaginationApi C:\inetpub\wwwroot\PaginationApi\
+
+    - name: Start IIS
+      run: iisreset /start
