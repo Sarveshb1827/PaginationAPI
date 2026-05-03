@@ -20,7 +20,7 @@ namespace PaginationApi.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public IActionResult GetEmployees([FromQuery] RequestParams requestParams)
+        public IActionResult GetEmployees([FromBody] RequestParams requestParams)
         {
             var result = _employeeService.GetEmployees(requestParams.PageNumber,requestParams.PageSize);
             return Ok(result);
