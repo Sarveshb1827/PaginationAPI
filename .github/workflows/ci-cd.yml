@@ -11,18 +11,21 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+
     - name: Restore NuGet Packages
       run: dotnet restore
 
     - name: Build Project
-      run: |
-       & "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" "PaginationApi.csproj" /p:Configuration=Release
+      run: dotnet build -c Release
+
+    - name: Publish Project
+      run: dotnet publish -c Release -o publish
 
     - name: Stop IIS
       run: iisreset /stop
 
     - name: Deploy Files
-      run: xcopy /E /Y .\PaginationApi C:\inetpub\wwwroot\PaginationApi\
+      run: xcopy /E /Y /I .\publish C:\inetpub\wwwroot\PaginationApi\
 
     - name: Start IIS
       run: iisreset /start
